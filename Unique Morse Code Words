@@ -1,0 +1,22 @@
+#include <string>
+#include <set>
+
+class Solution {
+public:
+    int uniqueMorseRepresentations(vector<string>& words) {
+        std::set<string> Myset;
+        string myArray[] =  {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        for(int i=0; i<words.size(); i++)
+        {
+            string morse_code ="";
+            for(int j=0 ;j < words[i].length(); j++)
+            {
+                morse_code = morse_code+myArray[words[i][j] - 'a'];
+            }
+            Myset.emplace(morse_code);
+        }
+        return Myset.size();
+        
+        
+    }
+};

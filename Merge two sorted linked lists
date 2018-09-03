@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        /*
+        //this method is the iterative one.
+        //Traverse through both the linked lists; take the smaller element and keep inserting it into the new linked list
+        //at the end, whichever linked list pointer is not NULL, attach that remaining to the result
+        ListNode *result = new ListNode(0);
+        ListNode *temp = result;
+        while(l1 != NULL && l2 != NULL)
+        {
+            if(l1->val <= l2->val)
+            {
+                temp->next = l1;
+                l1 = l1->next;
+            }
+            else
+            {
+                temp->next = l2;
+                l2 = l2->next;
+            }
+            temp = temp->next;
+            
+        }
+        if(l1 != NULL)
+        {
+            temp->next = l1;
+        }
+        if(l2 != NULL)
+        {
+            temp->next = l2;
+        }
+        return result->next;
+        */
+        //A recursive solution
+        if(!l1 && !l2)
+        {
+            return NULL;
+        }
+        else if(l1 && !l2)
+        {
+            return l1;
+        }
+        else if(!l1 && l2)
+        {
+            return l2;
+        }
+        else
+        {
+            if(l1->val > l2->val)
+            {
+                l2->next = mergeTwoLists(l1,l2->next);
+                return l2;
+            }
+            else
+            {
+                l1->next = mergeTwoLists(l1->next,l2);
+                return l1;
+            }
+        }
+    }
+};

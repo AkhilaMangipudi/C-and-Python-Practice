@@ -1,2 +1,2 @@
-# LeetCode
-#Contains code of all the LeetCode problems solved by me
+# C++ and Python Practice
+#Contains code of C++ and python practice problems solved by me

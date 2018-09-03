@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        int rev_result=0;
+        int input_num=x;
+        if(x<0)
+            return false;
+        if(x==0)
+            return true;
+        while(x!=0)
+        {
+            int remainder = x%10;
+            rev_result = rev_result*10+remainder;
+            x=x/10;
+            
+        }
+        if(rev_result == input_num)
+            return true;
+        else
+            return false;
+        
+    }
+};

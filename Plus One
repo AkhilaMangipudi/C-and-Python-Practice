@@ -1,0 +1,16 @@
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        temp = "".join(str(x) for x in digits)
+        var = int(temp)+1
+        resultList = []
+        while(var != 0):
+            resultList.append(var%10)
+            var = var/10
+        return resultList[::-1]
+            
+        
+        

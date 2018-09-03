@@ -1,0 +1,28 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        std::vector<int>::size_type myvec_size = nums.size();
+        std::vector<int> result;
+        for(int i =0; i < (myvec_size-1); i++)
+        {
+            for(int j =i+1; j< myvec_size; j++)
+            {
+                if(nums[i]+nums[j] == target)
+                {
+                    result.push_back(i);
+                    result.push_back(j);
+                    return result;
+                }
+                
+            }
+        }
+        return result;
+        
+    }
+};
+

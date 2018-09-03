@@ -1,0 +1,24 @@
+#include <math.h>
+
+class Solution {
+public:
+    int reverse(int x) {
+        int rev_result=0;
+        while(x!=0)
+        {
+            
+            int remainder = x%10;
+            int temp = rev_result;
+            rev_result = rev_result*10 + remainder;
+            if(rev_result/10 != temp)
+                return 0;
+            x=x/10;
+            if(rev_result > (pow(2,31)-1) || rev_result < (-pow(2,31)))
+            {
+                return 0;
+            }
+        }
+        
+        return rev_result;
+    }
+};

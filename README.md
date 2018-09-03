@@ -1,2 +1,2 @@
 # LeetCode
-#Contains code of all my Leetcode problems
+#Contains code of all the LeetCode problems solved by me

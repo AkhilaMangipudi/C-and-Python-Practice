@@ -1,0 +1,15 @@
+class Solution(object):
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        list = s.split(" ")
+        if(list[-1:] == [u'']):
+            for i in range(1,len(list)):
+                if(list[-(i+1):(-i)] != [u'']):
+                    return len("".join(list[-(i+1):-1]))
+        else:
+            return len("".join(list[-1:]))
+        
+        return 0;

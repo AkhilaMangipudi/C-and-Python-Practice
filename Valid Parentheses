@@ -1,44 +1,30 @@
 class Solution {
 public:
     bool isValid(string s) {
+        //use a stack to check the same
+        //push onto stack if its an opening breacket
+        //if its a closing bracket,check if the top of the stack is its corresponding open bracket, if so, pop it, otherwise return false
         stack<char> S;
-        for(int i=0; i<s.length(); i++)
+        int length = s.size();
+        for(int i=0; i<length; i++)
         {
             if(s[i] == '(' || s[i] == '{' || s[i] == '[')
             {
-                //opening braces; push them on to the stack
                 S.push(s[i]);
             }
+            else if(s[i] == ')' && !S.empty() && S.top() == '(')
+                S.pop();
+            else if(s[i] == '}' && !S.empty() && S.top() == '{')
+                S.pop();
+            else if(s[i] == ']' && !S.empty() && S.top() == '[')
+                S.pop();
             else
-            {
-                //assuming we have only opening and closing braces in the string and nothing else
-                if(!S.empty())
-                {
-                    char temp = S.top();
-                    if((temp == '(' && s[i] == ')') || (temp == '{' && s[i] == '}') || (temp == '[' && s[i] == ']'))
-                    {
-                        //the order of brackets is correct
-                        //pop the top from the stack
-                        S.pop();
-                    }
-                    else
-                    {
-                    return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-                
-                
-            }
+                return false;
         }
         if(S.empty())
-        {
             return true;
-        }
-        return false;
+        else
+            return false;
         
     }
 };

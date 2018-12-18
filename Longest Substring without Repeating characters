@@ -1,40 +1,28 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int max_len =1;
-        int curr_len = 1;
-        int visited[256];
-        for(int i=0; i< 256; i++)
+        //we need to find length of longest substring without repeating characters
+        //maintain two pointers, left and right to the string
+        //as we iterate through the string, string in between left to right-1 will not have any repeating characters. in every iteration, check if str[right] is present in substring between and left and right-left, if its present, we need to update the max_so_far variable.
+        int left = 0;
+        int right = 1;
+        int length = s.size();
+        int max_so_far = 0;
+        if(length == 1)
+            return 1;
+        for(int i=0; i<length; i++)
         {
-            visited[i] = -1;
-        }
-        size_t length = s.size();
-        if(length == 0)
-            return 0;
-        visited[s[0]] = 0;
-        
-        for(int i=1; i<length; i++)
-        {
-            int prev_index = visited[s[i]];
-            if(prev_index == -1 || i - curr_len > prev_index)
+            string temp = s.substr(left,right-left);
+            if(temp.find(s[right]) != string::npos)
             {
-                //either its not already visited or its not a part of the current longest substring
-                curr_len+=1;
+                //this character is present in that string
+                max_so_far = max(max_so_far,right-left);
+                left += temp.find(s[right])+1;
             }
-            else
-            {
-                //need to restart the longest substring
-                if(curr_len > max_len)
-                {
-                    max_len = curr_len;
-                }
-                curr_len = i-prev_index;
-            }
-            visited[s[i]] = i;
+            right++;
             
         }
-        return curr_len > max_len ? curr_len:max_len;
-        
+        return max(max_so_far,right-left-1);
         
     }
 };

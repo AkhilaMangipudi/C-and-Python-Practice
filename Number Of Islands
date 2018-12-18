@@ -1,0 +1,53 @@
+class Solution {
+public:
+    //time complexity of my solution is O(mn)
+    bool isSafe(int row, int col, int rowSize, int colSize, vector<vector<char>>& grid)
+    {
+        return (row >=0 && row < rowSize && col >=0 && col < colSize && grid[row][col] - '0' != 0);
+    }
+    void DFS(int i, int j,  vector<vector<int>>& visited, vector<vector<char>>& grid)
+    {
+        visited[i][j] = 1;
+        int rows = grid.size();
+        int cols = grid[0].size();
+        
+        if(isSafe(i-1,j,rows,cols,grid) && visited[i-1][j] == 0)
+        {
+            DFS(i-1,j,visited,grid);
+        }
+        if(isSafe(i+1,j,rows,cols,grid) && visited[i+1][j] == 0 )
+        {
+            DFS(i+1,j,visited,grid);
+        }
+        if(isSafe(i,j-1,rows,cols,grid) && visited[i][j-1] == 0 )
+        {
+            DFS(i,j-1,visited,grid);
+        }
+        if(isSafe(i,j+1,rows,cols,grid) && visited[i][j+1] == 0 )
+        {
+            DFS(i,j+1,visited,grid);
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        //this question is esentially to find the number of connected components in the graph. this can be obtained by doing a DFS. Each DFS gives on connected component. After doing a round of DFS, check for unvisited nodes and perform a DFS from there again to find all the connected components.
+        int numIslands = 0;
+        int numRows = grid.size();
+        if(numRows == 0)
+            return 0;
+        int numColumns = grid[0].size();
+        vector<vector<int>> visited(numRows,vector<int>(numColumns,0));
+        for(int i=0; i<numRows; i++)
+        {
+            for(int j=0; j<numColumns; j++)
+            {
+                if(grid[i][j] - '0' > 0 && visited[i][j] == 0)
+                {
+                    DFS(i,j,visited,grid);
+                    numIslands += 1;
+                }
+            }
+        }
+        return numIslands;
+        
+    }
+};

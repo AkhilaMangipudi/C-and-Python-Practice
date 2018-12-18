@@ -6,20 +6,21 @@ using namespace std;
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        std::vector<int>::size_type myvec_size = nums.size();
-        std::vector<int> result;
-        for(int i =0; i < (myvec_size-1); i++)
+        //use a hashtable for this problem
+        int length = nums.size();
+        unordered_map<int,int> HM;
+        vector<int> result;
+        for(int i=0; i<length; i++)
         {
-            for(int j =i+1; j< myvec_size; j++)
+            if(HM.find(target-nums[i]) != HM.end())
             {
-                if(nums[i]+nums[j] == target)
-                {
-                    result.push_back(i);
-                    result.push_back(j);
-                    return result;
-                }
+                //present in the hashmap
+                result.push_back(HM[target-nums[i]]);
+                result.push_back(i);
+                return result;
                 
             }
+            HM[nums[i]]=i;
         }
         return result;
         

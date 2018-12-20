@@ -1,0 +1,61 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * struct RandomListNode {
+ *     int label;
+ *     RandomListNode *next, *random;
+ *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    RandomListNode *copyRandomList(RandomListNode *head) {
+        //deep copy of the list means, original list should remain unaltered, new list should be a copy of original list, but nodes should not be same as that of the first list.
+        //steps to be followed:
+        //1. Duplicate the original list; each original node in the list must follow its respective duplicate node
+        //2. Iterate the new double length list and assign the random pointers to new nodes using random pointers of original nodes
+        //3. Iterate through new list and extract the new list and also copied list
+        
+        //step 1
+        RandomListNode *iter=head;
+        RandomListNode *next = NULL;
+        
+        while(iter != NULL)
+        {
+            next = iter->next;
+            RandomListNode *temp = new RandomListNode(iter->label);
+            iter->next = temp;
+            temp->next = next;
+            iter = next;
+        }
+        
+        //step 2
+        iter = head;
+        while(iter != NULL)
+        {
+            next = iter->next->next;
+            if(iter->random != NULL)
+            {
+                iter->next->random = iter->random->next;
+            }
+            iter = next;
+        }
+        
+        //step 3
+        iter = head;
+        RandomListNode *pseudoHead = new RandomListNode(0);
+        RandomListNode *copy, *copyIter = pseudoHead;
+        while(iter != NULL)
+        {
+            next = iter->next->next;
+            
+            copy = iter->next;
+            copyIter->next = copy;
+            copyIter = copy;
+            
+            iter->next = next; //this step is to restore the original list
+            iter = next;
+        }
+        return pseudoHead->next;
+            
+    }
+};

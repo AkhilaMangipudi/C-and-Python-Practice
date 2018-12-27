@@ -1,0 +1,54 @@
+class Solution {
+public:
+    //two ended BFS gives a better solution to this, try that!
+    void addNeighbourNodes(string beginWord, unordered_set<string>& wordDict, queue<string> &Q)
+    {
+        //find all such words which are at distance 1 from this node
+        wordDict.erase(beginWord);
+        int length = beginWord.size();
+        for(int i=0; i<length; i++)
+        {
+            char letter = beginWord[i];
+            for(int k=0; k<26; k++)
+            {
+                beginWord[i] = 'a'+k;
+                if(wordDict.find(beginWord) != wordDict.end())
+                {
+                    //word with a difference of one letter is present
+                    Q.push(beginWord);
+                    wordDict.erase(beginWord);
+                }
+            }
+            beginWord[i] = letter;
+        }
+    }
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        //this is a BFS problem. 
+        //if we consider the beginWord as a start node, then all the words with distance one from it can be considered its neighbours
+        //in this example, hot is neighbour of hit, dot and lot for hot, dog for dot, log for lot, cog for both dog and log
+        //we begin from the beginWord, visit its neighbours which are already not visited and in the meanwhile count the distance to reach endWord(if we can)
+        unordered_set<string> wordDict(wordList.begin(),wordList.end());
+        if(wordDict.find(endWord) == wordDict.end())
+            return 0;
+        queue<string> Q;
+        addNeighbourNodes(beginWord, wordDict, Q);
+        //now we have all neighbouring nodes to visit
+        int distance = 2;
+        while(!Q.empty())
+        {
+            int len = Q.size();
+            for(int i=0; i<len; i++)
+            {
+                string temp = Q.front();
+                Q.pop();
+                if(temp == endWord)
+                    return distance;
+                addNeighbourNodes(temp,wordDict,Q);
+            }
+            distance++;
+            
+        }
+        return 0;
+        
+    }
+};
